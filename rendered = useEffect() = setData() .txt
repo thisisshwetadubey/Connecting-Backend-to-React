@@ -1,0 +1,20 @@
+rendered => useEffect() => setData() => re-Rendered => useEffect() => setData() => re-Rendered 
+
+const data = ['abc', 'xyz', 'yui']
+const person = [1, 2, 3]
+
+useEffect( ()=>{
+
+console.log("useEffect1 called")
+
+		} )
+
+
+useEffect( ()=>{
+
+console.log("useEffect2 called")
+
+		}, [person] )
+
+
+
