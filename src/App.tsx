@@ -1,9 +1,9 @@
-import UseEffect from "./components/UseEffect";
+import FetchData from "./components/FetchData";
 
 function App() {
   return (
     <>
-      <UseEffect />
+      <FetchData />
     </>
   );
 }
