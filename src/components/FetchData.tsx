@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios, { CanceledError } from "axios";
-import { Alert, AlertIcon, Stack } from "@chakra-ui/react";
+import { Alert, AlertIcon, Spinner, Stack } from "@chakra-ui/react";
 
 interface NewData {
   userId: number;
@@ -11,17 +11,23 @@ interface NewData {
 const FetchData = () => {
   const [data, setData] = useState<NewData[]>([]);
   const [error, setError] = useState("");
+  const [isLoader, setLoader] = useState(false);
 
   useEffect(() => {
     const controller = new AbortController();
+    setLoader(true);
     axios
       .get<NewData[]>("https://jsonplaceholder.typicode.com/todos", {
         signal: controller.signal,
       })
-      .then((res) => setData(res.data))
+      .then((res) => {
+        setData(res.data);
+        setLoader(false);
+      })
       .catch((err) => {
         if (err instanceof CanceledError) return;
         setError(err.message);
+        setLoader(false);
       });
 
     return () => controller.abort();
@@ -29,6 +35,7 @@ const FetchData = () => {
 
   return (
     <>
+      {isLoader && <div className="spinner-border"></div>}
       {error && (
         <Stack spacing={3}>
           <Alert status="error">
