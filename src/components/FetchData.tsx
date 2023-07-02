@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios, { CanceledError } from "axios";
 import { Alert, AlertIcon, Stack } from "@chakra-ui/react";
 
 interface NewData {
@@ -13,12 +13,18 @@ const FetchData = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    const controller = new AbortController();
     axios
-      .get<NewData[]>("https://jsonplaceholder.typicode.com/todos")
+      .get<NewData[]>("https://jsonplaceholder.typicode.com/todos", {
+        signal: controller.signal,
+      })
       .then((res) => setData(res.data))
       .catch((err) => {
+        if (err instanceof CanceledError) return;
         setError(err.message);
       });
+
+    return () => controller.abort();
   }, []);
 
   return (
