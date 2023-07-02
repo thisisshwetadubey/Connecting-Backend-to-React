@@ -1,0 +1,23 @@
+Mount = rendering of component
+UnMount = vanishing componenet
+
+
+
+1. First time component rendering 
+
+	1. component mount
+	2. component UnMount 
+
+API response time 446ms
+
+componenet lifecycle  0.055ms
+	   
+
+
+
+
+2. Second time componenet rendering
+
+	1. componenet mount
+
+API response time 446ms
